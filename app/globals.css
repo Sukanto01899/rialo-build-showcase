@@ -1,26 +1,130 @@
+/* app/globals.css or styles/globals.css */
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Enable default daisyUI themes */
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark Theme - Using #a9ddd3, black, #e8e3d5 */
+@plugin "daisyui/theme" {
+  name: "rialodark";
+  default: false;
+  prefersdark: true; /* Set as default for dark mode */
+  color-scheme: dark;
+
+  /* Primary color - #a9ddd3 (mint green) */
+  --color-primary: oklch(85% 0.08 180);
+  --color-primary-content: oklch(15% 0 0);
+
+  /* Secondary - dark tones */
+  --color-secondary: oklch(25% 0 0);
+  --color-secondary-content: oklch(90% 0.02 60);
+
+  /* Accent - #a9ddd3 */
+  --color-accent: oklch(85% 0.08 180);
+  --color-accent-content: oklch(15% 0 0);
+
+  /* Base colors - black background with #e8e3d5 text */
+  --color-base-100: oklch(15% 0 0);
+  --color-base-200: oklch(20% 0 0);
+  --color-base-300: oklch(25% 0 0);
+  --color-base-content: oklch(90% 0.02 60);
+
+  /* Neutral - dark grays */
+  --color-neutral: oklch(30% 0 0);
+  --color-neutral-content: oklch(90% 0.02 60);
+
+  /* Utility colors */
+  --color-info: oklch(70% 0.15 220);
+  --color-info-content: oklch(98% 0.01 220);
+  --color-success: oklch(70% 0.15 150);
+  --color-success-content: oklch(15% 0 150);
+  --color-warning: oklch(80% 0.15 80);
+  --color-warning-content: oklch(15% 0 80);
+  --color-error: oklch(65% 0.2 25);
+  --color-error-content: oklch(98% 0.01 25);
+
+  /* Border radius */
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  /* Border size */
+  --border: 1px;
+
+  /* Effects */
+  --depth: 1;
+  --noise: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Light Theme - Using #a9ddd3, black, #e8e3d5 */
+@plugin "daisyui/theme" {
+  name: "rialolight";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+
+  /* Primary color - #a9ddd3 (mint green) */
+  --color-primary: oklch(85% 0.08 180);
+  --color-primary-content: oklch(15% 0 0);
+
+  /* Secondary - #e8e3d5 (beige) */
+  --color-secondary: oklch(92% 0.02 60);
+  --color-secondary-content: oklch(15% 0 0);
+
+  /* Accent - #a9ddd3 */
+  --color-accent: oklch(85% 0.08 180);
+  --color-accent-content: oklch(15% 0 0);
+
+  /* Base colors - #e8e3d5 background with black text */
+  --color-base-100: oklch(92% 0.02 60);
+  --color-base-200: oklch(98% 0.01 60);
+  --color-base-300: oklch(88% 0.03 60);
+  --color-base-content: oklch(15% 0 0);
+
+  /* Neutral - black */
+  --color-neutral: oklch(15% 0 0);
+  --color-neutral-content: oklch(92% 0.02 60);
+
+  /* Utility colors */
+  --color-info: oklch(70% 0.15 220);
+  --color-info-content: oklch(15% 0 220);
+  --color-success: oklch(70% 0.15 150);
+  --color-success-content: oklch(15% 0 150);
+  --color-warning: oklch(75% 0.15 80);
+  --color-warning-content: oklch(15% 0 80);
+  --color-error: oklch(65% 0.2 25);
+  --color-error-content: oklch(98% 0.01 25);
+
+  /* Border radius */
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  /* Border size */
+  --border: 1px;
+
+  /* Effects */
+  --depth: 1;
+  --noise: 0;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Optional: Custom styles for specific themes */
+[data-theme="rialodark"] {
+  /* Add any custom CSS for dark theme here */
+}
+
+[data-theme="rialolight"] {
+  /* Add any custom CSS for light theme here */
+}
+
+/* Organic Pattern Background */
+.pattern-background {
+  background-image: url("/bg-dark.svg");
+}
+
+[data-theme="rialolight"] .pattern-background {
+  background-image: url("/bg-light.svg");
 }
