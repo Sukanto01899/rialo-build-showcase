@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="mx-auto w-full lg:w-3/4 mt-8">
+      <div className="mx-auto w-full md:w-5/6 lg:w-3/4 my-8">
         <ProjectsGallery />
       </div>
     </>

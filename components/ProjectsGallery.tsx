@@ -3,7 +3,7 @@ import ProjectCard from "./ProjectCard";
 
 const ProjectsGallery = () => {
   return (
-    <div className="">
+    <div className="space-y-6">
       <div className="navbar">
         <div className="flex-1">
           <h3 className="font-semibold text-2xl">Community Showcase</h3>
@@ -32,7 +32,10 @@ const ProjectsGallery = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 gap-12 px-4 lg:px-0">
+        <ProjectCard />
+        <ProjectCard />
+        <ProjectCard />
         <ProjectCard />
         <ProjectCard />
         <ProjectCard />

@@ -1,9 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function ThemeToggle() {
-  const [checked, setChecked] = useState(false);
-
+export default function ThemeToggle({
+  checked,
+  setChecked,
+}: {
+  checked: boolean;
+  setChecked: (cb: (val: boolean) => boolean) => void;
+}) {
   useEffect(() => {
     if (checked) {
       document.documentElement.setAttribute("data-theme", "rialolight");
