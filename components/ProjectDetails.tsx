@@ -8,22 +8,23 @@ const ProjectDetails = () => {
     <>
       {/* Header */}
       <div className="card bg-base-200 shadow-sm ">
-        <div className="card-body flex-row justify-between">
-          <div>
+        <div className="card-body">
+          <div className="flex justify-between">
             <h2 className="card-title ">Rialo Game</h2>
-            <p>
-              Evolutive NFT Game, keep your Bombandak alive a long as you can by
-              transfering it!
-            </p>
+            <div className="flex gap-4">
+              <button className="btn btn-outline ">
+                <CiHeart className="text-xl" /> 10
+              </button>
+              <button className="btn btn-ghost ">
+                <IoEyeOutline className="text-xl" /> 10
+              </button>
+            </div>
           </div>
-          <div className="flex gap-4">
-            <button className="btn btn-outline btn-primary">
-              <CiHeart className="text-xl" /> 10
-            </button>
-            <button className="btn border-none">
-              <IoEyeOutline className="text-xl" /> 10
-            </button>
-          </div>
+
+          <p>
+            Evolutive NFT Game, keep your Bombandak alive a long as you can by
+            transfering it!
+          </p>
         </div>
       </div>
 

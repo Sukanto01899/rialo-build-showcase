@@ -6,9 +6,15 @@ const SubmissionForm = () => {
     <Modal>
       <dialog
         id="build_submission"
-        className="modal modal-bottom sm:modal-middle"
+        className="modal modal-bottom sm:modal-middle "
       >
-        <form className="modal-box">
+        <div className="modal-box bg-base-200">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-md btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
           <div className="text-center">
             <h1 className="text-xl font-semibold">Submit Your Build</h1>
             <p>
@@ -60,12 +66,12 @@ const SubmissionForm = () => {
             />
           </div>
           <div className="modal-action ">
-            <form method="dialog" className=" grid grid-cols-2 w-full gap-4">
-              <button className="btn btn-primary">Submit</button>
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-gosh">Close</button>
-            </form>
+            <button className="btn btn-primary">Submit</button>
           </div>
+        </div>
+
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
         </form>
       </dialog>
     </Modal>

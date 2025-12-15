@@ -21,7 +21,13 @@ const Hero = () => {
         <div className="max-w-2xl">
           <h1 className="mb-5 text-4xl lg:text-6xl font-bold">
             Discover Community Build on{" "}
-            <span className="font-bold italic px-2">Rialo</span>
+            <span className="text-rotate italic duration-4000">
+              <span>
+                <span>Rethink</span>
+                <span>Rebuild</span>
+                <span>Rialo</span>
+              </span>
+            </span>
           </h1>
           <p className="mb-5 text-lg lg:text-xl">
             Explore innovative projects built by the Rialo community builders.

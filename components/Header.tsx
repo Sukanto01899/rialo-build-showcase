@@ -16,7 +16,9 @@ const Header = () => {
             height={50}
           />
         </div>
-        <span className="text-base-content text-2xl font-bold">SHOWCASE</span>
+        <span className="text-base-content text-lg font-bold italic">
+          RIALO SHOWCASE
+        </span>
       </div>
       <div className="flex-none">
         <ThemeToggle setChecked={setChecked} checked={checked} />

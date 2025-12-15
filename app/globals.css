@@ -128,3 +128,10 @@
 [data-theme="rialolight"] .pattern-background {
   background-image: url("/bg-light.svg");
 }
+
+@utility divider {
+  @apply my-2;
+}
+@utility hero-overlay {
+  @apply bg-black/50;
+}

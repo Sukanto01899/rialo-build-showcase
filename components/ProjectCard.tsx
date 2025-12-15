@@ -8,17 +8,48 @@ const ProjectCard = () => {
   return (
     <div className="card bg-base-200 shadow-sm overflow-hidden">
       <Link href={"/345634"}>
-        <figure className="relative h-56">
+        <figure className="relative h-48">
           <img
             src="https://kingdom-survival.vercel.app/banner.png"
             alt="Shoes"
-            className="bg-cover hover:scale-110 duration-200 transform"
+            className="bg-cover hover:scale-110 duration-200 transform w-full h-full"
           />
 
-          <div className="bg-black/20 backdrop-blur-sm w-full h-12 absolute bottom-0 flex flex-col justify-center px-4">
-            <h1 className="font-semibold text-xl text-base-100">
-              Project Name
-            </h1>
+          <div className="bg-base-100/20 backdrop-blur-xs w-full h-12 items-center absolute bottom-0 flex justify-between px-4">
+            <h1 className="font-bold text-lg text-base-content">Rialo Game</h1>
+            <div className="rating rating-xs">
+              <input
+                type="radio"
+                name="rating-5"
+                className="mask mask-star-2 bg-orange-400"
+                aria-label="1 star"
+              />
+              <input
+                type="radio"
+                name="rating-5"
+                className="mask mask-star-2 bg-orange-400"
+                aria-label="2 star"
+                defaultChecked
+              />
+              <input
+                type="radio"
+                name="rating-5"
+                className="mask mask-star-2 bg-orange-400"
+                aria-label="3 star"
+              />
+              <input
+                type="radio"
+                name="rating-5"
+                className="mask mask-star-2 bg-orange-400"
+                aria-label="4 star"
+              />
+              <input
+                type="radio"
+                name="rating-5"
+                className="mask mask-star-2 bg-orange-400"
+                aria-label="5 star"
+              />
+            </div>
           </div>
         </figure>
       </Link>
@@ -46,22 +77,24 @@ const ProjectCard = () => {
           <div className="badge badge-outline badge-sm">Products</div>
         </div>
 
+        {/* Divider */}
         <div className="divider"></div>
 
-        <div className="card-actions ">
-          <div className="badge ">
+        {/* Views */}
+        <div className="flex w-full gap-2 flex-wrap text-xs mb-2">
+          <div className="flex items-center gap-2">
             <IoEyeOutline />
-            <span>Views</span>
+            <span>100 Views</span>
           </div>
-          <div className="badge ">
+          <div className="flex items-center gap-2 ">
             <CiHeart />
 
-            <span>Likes</span>
+            <span>200 Likes</span>
           </div>
-          <div className="badge ">
+          <div className="flex items-center gap-2 ">
             <IoLogoGithub />
 
-            <span>Ratings</span>
+            <span>234 Ratings</span>
           </div>
         </div>
 
