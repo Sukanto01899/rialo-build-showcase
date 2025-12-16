@@ -1,0 +1,17 @@
+export const categories = [
+  { id: 1, category: "game" },
+  { id: 2, category: "nft" },
+  { id: 3, category: "tooling" },
+  { id: 4, category: "dex" },
+  { id: 5, category: "assistant" },
+  { id: 6, category: "launchpad" },
+  { id: 7, category: "pixel art" },
+  { id: 9, category: "p2p" },
+  { id: 10, category: "dashboard" },
+  { id: 11, category: "social" },
+  { id: 12, category: "third place" },
+  { id: 13, category: "visualizer" },
+  { id: 14, category: "ai" },
+  { id: 15, category: "chatbot" },
+  { id: 16, category: "agent" },
+];

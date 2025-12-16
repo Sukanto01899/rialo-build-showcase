@@ -1,8 +1,9 @@
+import { categories } from "@/lib/constant";
 import React from "react";
 
 const SearchBar = () => {
   return (
-    <div className="card shadow-2xl border  bg-secondary/20 backdrop-blur-xl w-full">
+    <div className="card shadow-2xl border  bg-secondary/20 backdrop-blur-xl max-w-full md:max-w-3/4 xl:max-w-2/3">
       <div className="card-body ">
         <h2 className="card-title text-secondary-content">Filters</h2>
         <div className="flex flex-col gap-4">
@@ -13,18 +14,15 @@ const SearchBar = () => {
               type="text"
             />
           </div>
-          <div className="card-actions text-white flex flex-wrap">
-            <div className="badge  badge-outline">Outline</div>
-            <div className="badge  badge-outline">Outline</div>
-            <div className="badge  badge-outline">Outline</div>
-            <div className="badge badge-outline">Outline</div>
-            <div className="badge badge-outline">Outline</div>
-            <div className="badge badge-outline">Outline</div>
-            <div className="badge badge-outline">Outline</div>
-            <div className="badge badge-outline">Outline</div>
-            <div className="badge badge-outline">Outline</div>
-            <div className="badge badge-outline">Outline</div>
-            <div className="badge badge-outline">Outline</div>
+          <div className="card-actions justify-center text-white flex-wrap ">
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                className="badge  badge-outline cursor-pointer capitalize"
+              >
+                {category.category}
+              </div>
+            ))}
           </div>
         </div>
       </div>

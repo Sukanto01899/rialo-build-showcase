@@ -1,13 +1,20 @@
+import { IProject } from "@/model/Project";
 import Link from "next/link";
 import React from "react";
 import { CiHeart } from "react-icons/ci";
 import { GoLinkExternal } from "react-icons/go";
 import { IoEyeOutline, IoLogoGithub } from "react-icons/io5";
 
-const ProjectCard = () => {
+const ProjectCard = ({
+  project,
+  viewType,
+}: {
+  project: IProject;
+  viewType: string;
+}) => {
   return (
     <div className="card bg-base-200 shadow-sm overflow-hidden">
-      <Link href={"/345634"}>
+      <Link href={`/${project.slug}`}>
         <figure className="relative h-48">
           <img
             src="https://kingdom-survival.vercel.app/banner.png"
@@ -16,7 +23,9 @@ const ProjectCard = () => {
           />
 
           <div className="bg-base-100/20 backdrop-blur-xs w-full h-12 items-center absolute bottom-0 flex justify-between px-4">
-            <h1 className="font-bold text-lg text-base-content">Rialo Game</h1>
+            <h1 className="font-bold text-lg text-base-content">
+              {project.title}
+            </h1>
             <div className="rating rating-xs">
               <input
                 type="radio"
