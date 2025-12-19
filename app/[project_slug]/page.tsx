@@ -1,5 +1,4 @@
-import BuilderProfile from "@/components/BuilderProfile";
-import ProjectDetails from "@/components/ProjectDetails";
+import ProjectView from "@/components/ProjectView";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -54,7 +53,7 @@ export const ProjectPage = async ({
     notFound();
   }
   return (
-    <div className="mx-auto w-full md:w-5/6 lg:w-3/4 my-8  mt-16 mb-8 min-h-screen px-4 lg:px-0">
+    <div className="mx-auto w-full md:w-5/6 lg:w-4/5 my-8 mt-16 mb-8 min-h-screen px-4 lg:px-0">
       <div className="navbar">
         <Link href={"/"} className="flex gap-4 items-center hover:btn-link">
           <IoIosArrowRoundBack className="text-lg" />
@@ -62,14 +61,7 @@ export const ProjectPage = async ({
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
-        <div className="col-span-1 lg:col-span-2 space-y-6">
-          <ProjectDetails />
-        </div>
-        <div className="col-span-1">
-          <BuilderProfile />
-        </div>
-      </div>
+      <ProjectView project={project} />
     </div>
   );
 };

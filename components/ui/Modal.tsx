@@ -9,10 +9,9 @@ const Modal = ({ children }: { children: ReactNode }) => {
     if (element) {
       setPortal(element);
     }
-
-    console.log(portal);
   }, []);
   return portal && createPortal(children, portal);
 };
 
 export default Modal;
+

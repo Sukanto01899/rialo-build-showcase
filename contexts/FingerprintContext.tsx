@@ -36,7 +36,6 @@ export function FingerprintProvider({ children }: FingerprintProviderProps) {
       setIsLoading(true);
       setError(null);
 
-      // Check localStorage first
       const stored = localStorage.getItem(STORAGE_KEY);
 
       if (stored) {
@@ -45,10 +44,8 @@ export function FingerprintProvider({ children }: FingerprintProviderProps) {
         return;
       }
 
-      // Generate new fingerprint
       const newFingerprint = await generateFingerprint();
 
-      // Save to localStorage
       localStorage.setItem(STORAGE_KEY, newFingerprint);
       setFingerprint(newFingerprint);
     } catch (err) {
@@ -97,9 +94,6 @@ export function FingerprintProvider({ children }: FingerprintProviderProps) {
   );
 }
 
-/**
- * Hook to use fingerprint
- */
 export function useFingerprint(): FingerprintContextType {
   const context = useContext(FingerprintContext);
 

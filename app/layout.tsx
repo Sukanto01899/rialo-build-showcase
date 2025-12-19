@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Google_Sans_Code, Ubuntu } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { FingerprintProvider } from "@/contexts/FingerprintContext.tsx";
+import { FingerprintProvider } from "@/contexts/FingerprintContext";
 
 const geistSans = Ubuntu({
   variable: "--font-sans-code",

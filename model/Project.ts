@@ -13,6 +13,7 @@ export interface IProject extends Document {
   views: number;
   loves: number;
   lovedBy: string[];
+  viewedBy: string[];
   builder: {
     name: string;
     email: string;
@@ -42,7 +43,8 @@ const ProjectSchema = new mongoose.Schema<IProject>({
   // Stats
   views: { type: Number, default: 0 },
   loves: { type: Number, default: 0 },
-  lovedBy: [String],
+  lovedBy: { type: [String], default: [] },
+  viewedBy: { type: [String], default: [] },
 
   // Builder Info
   builder: {

@@ -20,21 +20,24 @@ export async function POST(
     await dbConnect();
 
     // Allow lookups by either MongoDB _id or slug
-    const project =
-      (await Project.findById(projectId)) ||
-      (await Project.findOne({ slug: projectId }));
+    const isObjectId = /^[a-fA-F0-9]{24}$/.test(projectId);
+    const project = isObjectId
+      ? await Project.findById(projectId)
+      : await Project.findOne({ slug: projectId });
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
+    const lovedBy = project.lovedBy || [];
+
     // Check if already loved
-    if (project.lovedBy.includes(clientId)) {
+    if (lovedBy.includes(clientId)) {
       return NextResponse.json({ error: "Already loved" }, { status: 400 });
     }
 
     // Add love
     project.loves += 1;
-    project.lovedBy.push(clientId);
+    project.lovedBy = [...lovedBy, clientId];
     await project.save();
 
     return NextResponse.json({
@@ -65,21 +68,24 @@ export async function DELETE(
 
     await dbConnect();
 
-    const project =
-      (await Project.findById(projectId)) ||
-      (await Project.findOne({ slug: projectId }));
+    const isObjectId = /^[a-fA-F0-9]{24}$/.test(projectId);
+    const project = isObjectId
+      ? await Project.findById(projectId)
+      : await Project.findOne({ slug: projectId });
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
+    const lovedBy = project.lovedBy || [];
+
     // Check if loved
-    if (!project.lovedBy.includes(clientId)) {
+    if (!lovedBy.includes(clientId)) {
       return NextResponse.json({ error: "Not loved yet" }, { status: 400 });
     }
 
     // Remove love
     project.loves -= 1;
-    project.lovedBy = project.lovedBy.filter((id: string) => id !== clientId);
+    project.lovedBy = lovedBy.filter((id: string) => id !== clientId);
     await project.save();
 
     return NextResponse.json({

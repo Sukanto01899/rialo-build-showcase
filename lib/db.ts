@@ -28,13 +28,35 @@ if (!cached) {
 }
 
 async function dbConnect(): Promise<typeof mongoose> {
+  const getDbNameFromUri = () => {
+    try {
+      const uri = MONGODB_URI!;
+      const path = uri.split("?")[0]?.split("/").pop();
+      return path && path.length > 0 ? path : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const configuredDbName =
+    getDbNameFromUri() || process.env.MONGODB_DB || "test";
+
   if (cached.conn) {
-    return cached.conn;
+    const currentName = cached.conn.connection?.name;
+    if (currentName && currentName !== configuredDbName) {
+      await cached.conn.disconnect();
+      cached.conn = null;
+    } else {
+      return cached.conn;
+    }
   }
 
   if (!cached.promise) {
+    const hasDbName = Boolean(getDbNameFromUri());
+
     const opts = {
       bufferCommands: false,
+      ...(hasDbName ? {} : { dbName: configuredDbName }),
     };
 
     cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
