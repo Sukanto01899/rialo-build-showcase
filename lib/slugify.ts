@@ -50,13 +50,3 @@ export function generateSlugWithTimestamp(title: string): string {
   return `${baseSlug}-${timestamp}`;
 }
 
-/**
- * Generate slug with nanoid (more unique, shorter)
- * Requires: npm install nanoid
- */
-export async function generateSlugWithNanoid(title: string): Promise<string> {
-  const { nanoid } = await import("nanoid");
-  const baseSlug = createSlug(title);
-  const uniqueId = nanoid(8); // 8 character unique ID
-  return `${baseSlug}-${uniqueId}`;
-}
