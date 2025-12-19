@@ -2,6 +2,8 @@ import dbConnect from "@/lib/db";
 import Submission from "@/model/Submission";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Admin Submissions | Rialo Builder Hub",
 };
