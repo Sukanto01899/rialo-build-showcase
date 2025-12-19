@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import ProjectsGallery from "@/components/ProjectsGallery";
 import { getAllProjects } from "@/lib/service";
+import { IProject } from "@/model/Project";
 
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -18,10 +19,11 @@ function getSearchParam(value?: string | string[]) {
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams?: HomeSearchParams;
+  searchParams?: Promise<HomeSearchParams>;
 }): Promise<Metadata> {
-  const query = getSearchParam(searchParams?.q);
-  const category = getSearchParam(searchParams?.category);
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const query = getSearchParam(resolvedSearchParams?.q);
+  const category = getSearchParam(resolvedSearchParams?.category);
 
   const titleParts = ["Rialo Builder Hub"];
   if (query) titleParts.push(`Search: ${query}`);
@@ -42,17 +44,18 @@ export async function generateMetadata({
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: HomeSearchParams;
+  searchParams?: Promise<HomeSearchParams>;
 }) {
-  const query = getSearchParam(searchParams?.q);
-  const category = getSearchParam(searchParams?.category);
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const query = getSearchParam(resolvedSearchParams?.q);
+  const category = getSearchParam(resolvedSearchParams?.category);
   const projectsResponse = await getAllProjects({
     query,
     category,
     page: 1,
     limit: 10,
   });
-  const projects = projectsResponse?.projects ?? [];
+  const projects = (projectsResponse?.projects ?? []) as IProject[];
   const total = projectsResponse?.total ?? projects.length;
   return (
     <Suspense fallback={<h1>Loading projects....</h1>}>

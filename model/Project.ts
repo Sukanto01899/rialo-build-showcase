@@ -7,7 +7,7 @@ export interface IProject extends Document {
   description: string;
   thumbnail: string;
   gitRepo: string;
-  liveLink: String;
+  liveLink: string;
   verified: boolean;
   httpsEnabled: boolean;
   views: number;
