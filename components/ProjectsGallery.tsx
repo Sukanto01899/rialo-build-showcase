@@ -54,23 +54,37 @@ const ProjectsGallery = ({
     setHasMore(false);
 
     fetch(`/api/projects?${params.toString()}`)
-      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Filter fetch failed with status ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
         const nextProjects = Array.isArray(data) ? data : data?.projects ?? [];
         const nextTotal = Array.isArray(data)
           ? nextProjects.length
           : data?.total ?? 0;
+
+        // If API returns nothing, keep existing items to avoid blank states.
+        if (!nextProjects.length && items.length) {
+          setIsFiltering(false);
+          return;
+        }
+
         setItems(nextProjects);
         setTotalCount(nextTotal);
         setHasMore(nextProjects.length < nextTotal);
       })
       .catch((error) => {
         console.error("Filter fetch error:", error);
+        // Keep current items visible on error.
+        setHasMore(false);
       })
       .finally(() => {
         setIsFiltering(false);
       });
-  }, [activeQuery, activeCategory]);
+  }, [activeQuery, activeCategory, items.length]);
 
   const loadMore = useCallback(async () => {
     if (isLoadingMore || !hasMore) return;
@@ -190,8 +204,11 @@ const ProjectsGallery = ({
       </div>
 
       {projectCount === 0 && !isFiltering ? (
-        <div className="text-center text-base-content/70">
-          No projects found. Try a different search or category.
+        <div className="text-center text-base-content/70 space-y-2">
+          <p className="font-semibold text-base-content">No projects found.</p>
+          <p className="text-sm">
+            Try a different search or category, or submit the first project.
+          </p>
         </div>
       ) : (
         <div
