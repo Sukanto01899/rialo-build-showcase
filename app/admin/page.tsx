@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: "Admin Dashboard | Rialo Builder Hub",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminIndex() {
   await dbConnect();
   const [pendingSubmissions, reviewedSubmissions, projects] =

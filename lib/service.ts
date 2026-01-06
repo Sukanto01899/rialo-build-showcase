@@ -1,8 +1,14 @@
-const baseUrl =
+const deploymentUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000");
+  process.env.SITE_URL ||
+  process.env.NEXT_PUBLIC_VERCEL_URL ||
+  process.env.VERCEL_URL;
+
+const baseUrl = deploymentUrl
+  ? deploymentUrl.startsWith("http")
+    ? deploymentUrl
+    : `https://${deploymentUrl}`
+  : "";
 
 type ProjectQuery = {
   query?: string;
@@ -25,7 +31,8 @@ export async function getAllProjects(params?: ProjectQuery) {
   if (params?.page) searchParams.set("page", String(params.page));
   if (params?.limit) searchParams.set("limit", String(params.limit));
   const queryString = searchParams.toString();
-  const url = `${baseUrl}/api/projects${queryString ? `?${queryString}` : ""}`;
+  const origin = baseUrl.replace(/\/$/, "");
+  const url = `${origin}/api/projects${queryString ? `?${queryString}` : ""}`;
 
   const res = await fetch(url, {
     cache: "no-store",
@@ -45,7 +52,8 @@ export async function getAllProjects(params?: ProjectQuery) {
 }
 
 export async function getProject(slug: string) {
-  const res = await fetch(`${baseUrl}/api/projects/${slug}`, {
+  const origin = baseUrl.replace(/\/$/, "");
+  const res = await fetch(`${origin}/api/projects/${slug}`, {
     cache: "no-store",
   });
 

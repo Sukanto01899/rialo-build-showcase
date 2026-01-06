@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   title: "Projects | Rialo Builder Hub",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProjectsPage() {
   await dbConnect();
   const projects = await Project.find({}).sort({ createdAt: -1 }).lean();
