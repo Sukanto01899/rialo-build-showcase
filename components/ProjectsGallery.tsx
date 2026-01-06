@@ -43,6 +43,13 @@ const ProjectsGallery = ({
   useEffect(() => {
     const query = activeQuery.trim();
     const categoryValue = activeCategory.trim();
+
+    // Skip client refetch when no filters are applied to avoid unnecessary flashes.
+    if (!query && !categoryValue) {
+      setIsFiltering(false);
+      return;
+    }
+
     const params = new URLSearchParams();
     if (query) params.set("q", query);
     if (categoryValue) params.set("category", categoryValue);
