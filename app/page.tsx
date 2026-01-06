@@ -16,14 +16,20 @@ function getSearchParam(value?: string | string[]) {
   return Array.isArray(value) ? value[0] ?? "" : value;
 }
 
+async function resolveSearchParams(
+  searchParams?: HomeSearchParams | Promise<HomeSearchParams>
+) {
+  return searchParams ? await searchParams : {};
+}
+
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams?: Promise<HomeSearchParams>;
+  searchParams?: HomeSearchParams | Promise<HomeSearchParams>;
 }): Promise<Metadata> {
-  const resolvedSearchParams = searchParams ? await searchParams : undefined;
-  const query = getSearchParam(resolvedSearchParams?.q);
-  const category = getSearchParam(resolvedSearchParams?.category);
+  const resolvedParams = await resolveSearchParams(searchParams);
+  const query = getSearchParam(resolvedParams.q);
+  const category = getSearchParam(resolvedParams.category);
 
   const titleParts = ["Rialo Builder Hub"];
   if (query) titleParts.push(`Search: ${query}`);
@@ -44,11 +50,11 @@ export async function generateMetadata({
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: Promise<HomeSearchParams>;
+  searchParams?: HomeSearchParams | Promise<HomeSearchParams>;
 }) {
-  const resolvedSearchParams = searchParams ? await searchParams : undefined;
-  const query = getSearchParam(resolvedSearchParams?.q);
-  const category = getSearchParam(resolvedSearchParams?.category);
+  const resolvedParams = await resolveSearchParams(searchParams);
+  const query = getSearchParam(resolvedParams.q);
+  const category = getSearchParam(resolvedParams.category);
   const projectsResponse = await getAllProjects({
     query,
     category,

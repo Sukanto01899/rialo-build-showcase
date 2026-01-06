@@ -31,3 +31,37 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  if (!isAuthorized(req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const id = req.nextUrl.searchParams.get("id");
+    if (!id) {
+      return NextResponse.json(
+        { error: "Submission id required" },
+        { status: 400 }
+      );
+    }
+
+    await dbConnect();
+    const submission = await Submission.findByIdAndDelete(id);
+
+    if (!submission) {
+      return NextResponse.json(
+        { error: "Submission not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Admin submission delete error:", error);
+    return NextResponse.json(
+      { error: "Failed to delete submission" },
+      { status: 500 }
+    );
+  }
+}

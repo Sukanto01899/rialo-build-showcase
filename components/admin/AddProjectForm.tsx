@@ -23,6 +23,7 @@ const AddProjectForm = () => {
       liveLink: formData.get("liveLink")?.toString().trim(),
       category: formData.get("category")?.toString().trim(),
       tech: formData.get("tech")?.toString().trim(),
+      tags: formData.get("tags")?.toString().trim(),
       builderName: formData.get("builderName")?.toString().trim(),
       builderEmail: formData.get("builderEmail")?.toString().trim(),
       builderUsername: formData.get("builderUsername")?.toString().trim(),
@@ -113,7 +114,7 @@ const AddProjectForm = () => {
         className="textarea w-full"
         placeholder="Builder bio"
       ></textarea>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <input
           name="category"
           type="text"
@@ -125,6 +126,12 @@ const AddProjectForm = () => {
           type="text"
           className="input w-full"
           placeholder="Tech stack (comma separated)"
+        />
+        <input
+          name="tags"
+          type="text"
+          className="input w-full"
+          placeholder="Tags (comma separated)"
         />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

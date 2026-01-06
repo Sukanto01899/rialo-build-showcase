@@ -32,7 +32,7 @@ const Hero = ({ searchQuery = "", category = "" }: HeroProps) => {
           </div>
           <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
             Discover what builders ship on{" "}
-            <span className="text-rotate italic duration-4000">
+            <span className="text-rotate  duration-4000">
               <span>
                 <span>Rethink</span>
                 <span>Rebuild</span>
@@ -48,7 +48,10 @@ const Hero = ({ searchQuery = "", category = "" }: HeroProps) => {
             <button onClick={handleExplore} className="btn btn-primary">
               Explore Projects
             </button>
-            <button onClick={handleDialog} className="btn btn-outline btn-primary">
+            <button
+              onClick={handleDialog}
+              className="btn btn-outline btn-primary"
+            >
               Submit Your Build
             </button>
           </div>
@@ -62,4 +65,3 @@ const Hero = ({ searchQuery = "", category = "" }: HeroProps) => {
 };
 
 export default Hero;
-

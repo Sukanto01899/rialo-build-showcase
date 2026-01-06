@@ -20,6 +20,8 @@ const SubmissionForm = () => {
     const payload = {
       projectName: formData.get("projectName")?.toString().trim(),
       description: formData.get("description")?.toString().trim(),
+      category: formData.get("category")?.toString().trim(),
+      tech: formData.get("tech")?.toString().trim(),
       builderXUsername: formData.get("builderXUsername")?.toString().trim(),
       discordUsername: formData.get("discordUsername")?.toString().trim(),
       tags: formData.get("tags")?.toString().trim(),
@@ -27,6 +29,22 @@ const SubmissionForm = () => {
       liveUrl: formData.get("liveUrl")?.toString().trim(),
       imageUrl: formData.get("imageUrl")?.toString().trim(),
     };
+
+    const requiredValues = [
+      payload.projectName,
+      payload.description,
+      payload.tech,
+      payload.builderXUsername,
+      payload.discordUsername,
+      payload.tags,
+      payload.githubUrl,
+    ];
+
+    if (requiredValues.some((value) => !value)) {
+      setStatus("error");
+      setMessage("Please fill in all fields before submitting.");
+      return;
+    }
 
     try {
       const res = await fetch("/api/submissions", {
@@ -82,29 +100,50 @@ const SubmissionForm = () => {
               required
               placeholder="Project description"
             ></textarea>
-            <input
-              name="builderXUsername"
-              type="text"
-              className="input validator w-full"
-              required
-              placeholder="Builder Twitter/X username"
-            />
-            <input
-              name="discordUsername"
-              type="text"
-              className="input validator w-full"
-              placeholder="Discord username (Optional)"
-            />
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+              <input
+                name="category"
+                type="text"
+                className="input validator w-full"
+                required
+                placeholder="Category (comma separated)"
+              />
+              <input
+                name="tech"
+                type="text"
+                className="input validator w-full"
+                required
+                placeholder="Tech stack (comma separated)"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+              <input
+                name="builderXUsername"
+                type="text"
+                className="input validator w-full"
+                required
+                placeholder="Builder Twitter/X username"
+              />
+              <input
+                name="discordUsername"
+                type="text"
+                className="input validator w-full"
+                required
+                placeholder="Discord username"
+              />
+            </div>
             <input
               name="tags"
               type="text"
               className="input validator w-full"
+              required
               placeholder="Tags (Comma separated)"
             />
             <input
               name="githubUrl"
               type="url"
               className="input validator w-full"
+              required
               placeholder="Github URL"
             />
             <input

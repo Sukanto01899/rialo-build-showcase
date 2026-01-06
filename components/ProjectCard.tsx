@@ -155,19 +155,28 @@ const ProjectCard = ({
 
   if (viewType === "list") {
     return (
-      <div className="card bg-base-200/80 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-base-300/60">
+      <div className="card group bg-base-200/80 shadow-lg hover:shadow-2xl transition-transform transition-shadow duration-300 overflow-hidden border border-base-300/60 hover:-translate-y-1 hover:scale-[1.01] transform-gpu will-change-transform">
         <div className="flex flex-col gap-4 p-4 md:flex-row">
           <Link
             href={`/${project.slug}`}
             onClick={handleView}
             className="relative h-40 w-full overflow-hidden rounded-xl md:h-32 md:w-56 md:flex-shrink-0"
           >
-            <img
-              src={project.thumbnail || "https://placehold.co/600x400"}
-              alt={project.title}
-              className="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-base-100/80 via-base-100/10 to-transparent"></div>
+            {project.thumbnail ? (
+              <>
+                <img
+                  src={project.thumbnail}
+                  alt={project.title}
+                  className="h-full w-full object-cover"
+                  style={{ backfaceVisibility: "hidden" }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-base-100/80 via-base-100/10 to-transparent transform-gpu"></div>
+              </>
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-base-300 px-4 text-center text-xs font-semibold uppercase tracking-wide text-base-content/80">
+                {project.title}
+              </div>
+            )}
           </Link>
 
           <div className="flex min-w-0 flex-1 flex-col gap-3">
@@ -204,7 +213,7 @@ const ProjectCard = ({
             <div className="flex flex-wrap gap-2">
               {(project.category || []).length ? (
                 project.category.map((item) => (
-                  <span key={item} className="badge badge-outline badge-sm">
+                  <span key={`category-${item}`} className="badge badge-outline badge-sm">
                     {item}
                   </span>
                 ))
@@ -265,15 +274,24 @@ const ProjectCard = ({
   }
 
   return (
-    <div className="card bg-base-200/80 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-base-300/60">
+    <div className="card group bg-base-200/80 shadow-lg hover:shadow-2xl transition-transform transition-shadow duration-300 overflow-hidden border border-base-300/60 hover:-translate-y-1 hover:scale-[1.01] transform-gpu will-change-transform">
       <Link href={`/${project.slug}`} onClick={handleView}>
         <figure className="relative h-48 md:h-52 lg:h-56">
-          <img
-            src={project.thumbnail || "https://placehold.co/600x400"}
-            alt={project.title}
-            className="bg-cover hover:scale-110 duration-300 transform w-full h-full"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-base-100/90 via-base-100/10 to-transparent"></div>
+          {project.thumbnail ? (
+            <>
+              <img
+                src={project.thumbnail}
+                alt={project.title}
+                className="bg-cover w-full h-full"
+                style={{ backfaceVisibility: "hidden" }}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-base-100/90 via-base-100/10 to-transparent transform-gpu"></div>
+            </>
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-base-300 px-6 text-center text-sm font-semibold uppercase tracking-wide text-base-content/80">
+              {project.title}
+            </div>
+          )}
 
           <div className="project-card-overlay w-full h-12 items-center absolute bottom-0 flex justify-between px-4">
             <div className="flex items-center gap-2 min-w-0">
@@ -323,7 +341,7 @@ const ProjectCard = ({
         <div className="card-actions justify-start flex-wrap gap-2">
           {(project.category || []).length ? (
             project.category.map((item) => (
-              <div key={item} className="badge badge-outline badge-sm">
+              <div key={`category-${item}`} className="badge badge-outline badge-sm">
                 {item}
               </div>
             ))

@@ -25,6 +25,7 @@ const EditProjectForm = ({ project }: { project: IProject }) => {
       liveLink: formData.get("liveLink")?.toString().trim(),
       category: formData.get("category")?.toString().trim(),
       tech: formData.get("tech")?.toString().trim(),
+      tags: formData.get("tags")?.toString().trim(),
       builderName: formData.get("builderName")?.toString().trim(),
       builderEmail: formData.get("builderEmail")?.toString().trim(),
       builderUsername: formData.get("builderUsername")?.toString().trim(),
@@ -120,7 +121,7 @@ const EditProjectForm = ({ project }: { project: IProject }) => {
         placeholder="Builder bio"
         defaultValue={project.builder?.about?.toString() || ""}
       ></textarea>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <input
           name="category"
           type="text"
@@ -134,6 +135,13 @@ const EditProjectForm = ({ project }: { project: IProject }) => {
           className="input w-full"
           placeholder="Tech stack (comma separated)"
           defaultValue={(project.tech || []).join(", ")}
+        />
+        <input
+          name="tags"
+          type="text"
+          className="input w-full"
+          placeholder="Tags (comma separated)"
+          defaultValue={(project.tags || []).join(", ")}
         />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

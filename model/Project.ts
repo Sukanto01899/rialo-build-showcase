@@ -25,6 +25,7 @@ export interface IProject extends Document {
   status: "pending" | "approved" | "rejected";
   category: string[];
   tech: string[];
+  tags: string[];
   createdAt: Date;
 }
 
@@ -65,6 +66,7 @@ const ProjectSchema = new mongoose.Schema<IProject>({
 
   category: [String],
   tech: [String],
+  tags: [String],
 
   createdAt: { type: Date, default: Date.now },
 });
