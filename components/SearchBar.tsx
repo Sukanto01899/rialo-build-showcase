@@ -23,6 +23,8 @@ const SearchBar = ({ searchQuery = "", category = "" }: SearchBarProps) => {
   );
   const formRef = useRef<HTMLFormElement>(null);
   const categoryInputRef = useRef<HTMLInputElement>(null);
+  const isTypingRef = useRef(false);
+  const latestQueryRef = useRef(searchQuery);
 
   const updateUrl = (nextQuery: string, nextCategories: string[]) => {
     const params = new URLSearchParams();
@@ -36,7 +38,20 @@ const SearchBar = ({ searchQuery = "", category = "" }: SearchBarProps) => {
   };
 
   useEffect(() => {
-    setQuery(searchQuery);
+    latestQueryRef.current = query;
+  }, [query]);
+
+  useEffect(() => {
+    const nextValue = searchQuery ?? "";
+    const currentValue = latestQueryRef.current;
+
+    // Avoid overwriting the user's in-flight edits with an older searchParam value.
+    if (isTypingRef.current && nextValue !== currentValue) {
+      return;
+    }
+
+    isTypingRef.current = false;
+    setQuery(nextValue);
   }, [searchQuery]);
 
   useEffect(() => {
@@ -107,7 +122,10 @@ const SearchBar = ({ searchQuery = "", category = "" }: SearchBarProps) => {
                   className="input w-full bg-base-100/90 border-base-300 text-base-content placeholder:text-base-content/60"
                   type="text"
                   value={query}
-                  onChange={(event) => setQuery(event.target.value)}
+                  onChange={(event) => {
+                    isTypingRef.current = true;
+                    setQuery(event.target.value);
+                  }}
                 />
               </div>
             </label>
