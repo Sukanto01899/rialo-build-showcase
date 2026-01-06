@@ -1,11 +1,40 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import dbConnect from "@/lib/db";
+import Submission from "@/model/Submission";
+import Project from "@/model/Project";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard | Rialo Builder Hub",
 };
 
-export default function AdminIndex() {
+export default async function AdminIndex() {
+  await dbConnect();
+  const [pendingSubmissions, reviewedSubmissions, projects] =
+    await Promise.all([
+      Submission.countDocuments({ status: "pending" }),
+      Submission.countDocuments({ status: "reviewed" }),
+      Project.aggregate<{ _id: string; count: number }>([
+        { $group: { _id: "$status", count: { $sum: 1 } } },
+      ]),
+    ]);
+
+  const projectCounts = projects.reduce(
+    (acc, item) => {
+      acc[item._id] = item.count;
+      return acc;
+    },
+    {
+      approved: 0,
+      pending: 0,
+      rejected: 0,
+    } as Record<string, number>
+  );
+
+  const totalSubmissions = pendingSubmissions + reviewedSubmissions;
+  const totalProjects =
+    projectCounts.approved + projectCounts.pending + projectCounts.rejected;
+
   return (
     <div className="space-y-6">
       <div>
@@ -15,23 +44,41 @@ export default function AdminIndex() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="card bg-base-200 shadow-sm">
           <div className="card-body">
             <p className="text-sm text-base-content/70">Submissions</p>
-            <h2 className="text-2xl font-semibold">Review queue</h2>
+            <h2 className="text-2xl font-semibold">{pendingSubmissions}</h2>
+            <p className="text-sm text-base-content/70">
+              Pending of {totalSubmissions}
+            </p>
+            <Link className="link mt-2 text-sm" href="/admin/submissions">
+              Review submissions
+            </Link>
           </div>
         </div>
         <div className="card bg-base-200 shadow-sm">
           <div className="card-body">
             <p className="text-sm text-base-content/70">Projects</p>
-            <h2 className="text-2xl font-semibold">Add & publish</h2>
+            <h2 className="text-2xl font-semibold">{projectCounts.approved}</h2>
+            <p className="text-sm text-base-content/70">
+              Approved of {totalProjects}
+            </p>
+            <Link className="link mt-2 text-sm" href="/admin/projects">
+              Manage projects
+            </Link>
           </div>
         </div>
         <div className="card bg-base-200 shadow-sm">
           <div className="card-body">
             <p className="text-sm text-base-content/70">Moderation</p>
-            <h2 className="text-2xl font-semibold">Pending checks</h2>
+            <h2 className="text-2xl font-semibold">
+              {projectCounts.pending}
+            </h2>
+            <p className="text-sm text-base-content/70">Projects pending</p>
+            <Link className="link mt-2 text-sm" href="/admin/projects">
+              Review pending
+            </Link>
           </div>
         </div>
       </div>
@@ -40,9 +87,15 @@ export default function AdminIndex() {
         <div className="card-body">
           <h2 className="card-title">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">
-            <button className="btn btn-primary">Review Submissions</button>
-            <button className="btn btn-secondary">Add Project</button>
-            <button className="btn btn-ghost">Open Dashboard</button>
+            <Link className="btn btn-primary" href="/admin/submissions">
+              Review submissions
+            </Link>
+            <Link className="btn btn-secondary" href="/admin/add-project">
+              Add project
+            </Link>
+            <Link className="btn btn-ghost" href="/admin/projects">
+              Open projects
+            </Link>
           </div>
         </div>
       </div>

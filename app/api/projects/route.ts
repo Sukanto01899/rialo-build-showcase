@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
       liveLink: data.liveLink,
       category: normalizeList(data.category),
       tech: normalizeList(data.tech),
+      tags: normalizeList(data.tags),
       builder: data.builder,
       status: "pending",
     });
@@ -66,7 +67,13 @@ export async function GET(req: NextRequest) {
       const textRegex = new RegExp(escapedQuery, "i");
       filter.$or = [
         { title: { $regex: textRegex } },
+        { description: { $regex: textRegex } },
+        { tags: { $regex: textRegex } },
+        { category: { $regex: textRegex } },
+        { tech: { $regex: textRegex } },
+        { "builder.name": { $regex: textRegex } },
         { "builder.username": { $regex: textRegex } },
+        { gitRepo: { $regex: textRegex } },
       ];
     }
 

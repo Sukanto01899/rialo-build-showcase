@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
         : [];
     const category = normalizeList(data.category);
     const tech = normalizeList(data.tech);
+    const tags = normalizeList(data.tags);
 
     const status =
       data.status === "pending" || data.status === "rejected"
@@ -47,6 +48,7 @@ export async function POST(req: NextRequest) {
       httpsEnabled: Boolean(data.httpsEnabled),
       category,
       tech,
+      tags,
       builder: {
         name: data.builderName,
         email: data.builderEmail,
@@ -209,6 +211,7 @@ export async function PUT(req: NextRequest) {
       httpsEnabled: Boolean(data.httpsEnabled),
       category: normalizeList(data.category),
       tech: normalizeList(data.tech),
+      tags: normalizeList(data.tags),
       builder: {
         name: data.builderName,
         email: data.builderEmail,

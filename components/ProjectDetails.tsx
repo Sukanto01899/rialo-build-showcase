@@ -23,8 +23,7 @@ const ProjectDetails = ({
   hasLoved,
   onToggleLove,
 }: ProjectDetailsProps) => {
-  const categories = project.category || [];
-  const tech = project.tech || [];
+  const tags = project.tags || [];
 
   return (
     <>
@@ -70,12 +69,20 @@ const ProjectDetails = ({
 
       <div className="card bg-base-200 overflow-hidden">
         <figure className="relative">
-          <img
-            src={project.thumbnail || "https://placehold.co/1200x600"}
-            alt={project.title}
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-base-100/60 via-transparent to-transparent"></div>
+          {project.thumbnail ? (
+            <>
+              <img
+                src={project.thumbnail}
+                alt={project.title}
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-base-100/60 via-transparent to-transparent"></div>
+            </>
+          ) : (
+            <div className="flex h-56 w-full items-center justify-center bg-base-300 px-6 text-center text-base font-semibold uppercase tracking-wide text-base-content/80 md:h-72">
+              {project.title}
+            </div>
+          )}
         </figure>
       </div>
 
@@ -86,42 +93,21 @@ const ProjectDetails = ({
           <div className="space-y-4">
             <div>
               <h2 className="text-sm uppercase tracking-widest text-base-content/60">
-                Technologies
+                Tags
               </h2>
               <div className="flex flex-wrap gap-2 pt-2">
-                {tech.length ? (
-                  tech.map((item) => (
+                {tags.length ? (
+                  tags.map((item) => (
                     <span
                       key={item}
                       className="badge badge-outline badge-sm capitalize"
                     >
-                      {item}
+                      #{item}
                     </span>
                   ))
                 ) : (
                   <span className="text-sm text-base-content/60">
-                    No technologies listed.
-                  </span>
-                )}
-              </div>
-            </div>
-            <div>
-              <h2 className="text-sm uppercase tracking-widest text-base-content/60">
-                Categories
-              </h2>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {categories.length ? (
-                  categories.map((item) => (
-                    <span
-                      key={item}
-                      className="badge badge-outline badge-sm capitalize"
-                    >
-                      {item}
-                    </span>
-                  ))
-                ) : (
-                  <span className="text-sm text-base-content/60">
-                    No categories listed.
+                    No tags listed.
                   </span>
                 )}
               </div>
