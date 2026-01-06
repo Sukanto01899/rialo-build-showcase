@@ -24,6 +24,8 @@ const ProjectDetails = ({
   onToggleLove,
 }: ProjectDetailsProps) => {
   const tags = project.tags || [];
+  const categories = project.category || [];
+  const techStack = project.tech || [];
 
   return (
     <>
@@ -91,6 +93,50 @@ const ProjectDetails = ({
           <h1 className="card-title">Project Details</h1>
 
           <div className="space-y-4">
+            <div>
+              <h2 className="text-sm uppercase tracking-widest text-base-content/60">
+                Categories
+              </h2>
+              <div className="flex flex-wrap gap-2 pt-2">
+                {categories.length ? (
+                  categories.map((item) => (
+                    <span
+                      key={item}
+                      className="badge badge-outline badge-sm capitalize"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-sm text-base-content/60">
+                    No categories listed.
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-sm uppercase tracking-widest text-base-content/60">
+                Tech Stack
+              </h2>
+              <div className="flex flex-wrap gap-2 pt-2">
+                {techStack.length ? (
+                  techStack.map((item) => (
+                    <span
+                      key={item}
+                      className="badge badge-outline badge-sm capitalize"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-sm text-base-content/60">
+                    No tech stack listed.
+                  </span>
+                )}
+              </div>
+            </div>
+
             <div>
               <h2 className="text-sm uppercase tracking-widest text-base-content/60">
                 Tags
