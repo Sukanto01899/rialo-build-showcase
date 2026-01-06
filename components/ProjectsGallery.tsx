@@ -50,7 +50,6 @@ const ProjectsGallery = ({
     params.set("limit", "10");
 
     setIsFiltering(true);
-    setItems([]);
     setPage(1);
     setHasMore(false);
 
