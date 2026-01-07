@@ -29,7 +29,10 @@ const ProjectsGallery = ({
   const [hasMore, setHasMore] = useState((projects?.length ?? 0) < total);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isFiltering, setIsFiltering] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [showProgress, setShowProgress] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const latestItemsRef = useRef<IProject[]>(projects ?? []);
   const projectCount = items.length;
   const isFiltered = Boolean(activeQuery || activeCategory);
 
@@ -41,6 +44,10 @@ const ProjectsGallery = ({
   }, [projects, total]);
 
   useEffect(() => {
+    latestItemsRef.current = items;
+  }, [items]);
+
+  useEffect(() => {
     const query = activeQuery.trim();
     const categoryValue = activeCategory.trim();
     const params = new URLSearchParams();
@@ -49,11 +56,14 @@ const ProjectsGallery = ({
     params.set("page", "1");
     params.set("limit", "10");
 
+    const controller = new AbortController();
     setIsFiltering(true);
     setPage(1);
     setHasMore(false);
 
-    fetch(`/api/projects?${params.toString()}`)
+    let isAborted = false;
+
+    fetch(`/api/projects?${params.toString()}`, { signal: controller.signal })
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Filter fetch failed with status ${res.status}`);
@@ -67,7 +77,7 @@ const ProjectsGallery = ({
           : data?.total ?? 0;
 
         // If API returns nothing, keep existing items to avoid blank states.
-        if (!nextProjects.length && items.length) {
+        if (!nextProjects.length && latestItemsRef.current.length) {
           setIsFiltering(false);
           return;
         }
@@ -77,14 +87,25 @@ const ProjectsGallery = ({
         setHasMore(nextProjects.length < nextTotal);
       })
       .catch((error) => {
+        if (error.name === "AbortError") {
+          isAborted = true;
+          return;
+        }
         console.error("Filter fetch error:", error);
         // Keep current items visible on error.
         setHasMore(false);
       })
       .finally(() => {
-        setIsFiltering(false);
+        if (!isAborted) {
+          setIsFiltering(false);
+        }
       });
-  }, [activeQuery, activeCategory, items.length]);
+
+    return () => {
+      isAborted = true;
+      controller.abort();
+    };
+  }, [activeQuery, activeCategory]);
 
   const loadMore = useCallback(async () => {
     if (isLoadingMore || !hasMore) return;
@@ -144,8 +165,43 @@ const ProjectsGallery = ({
     observer.observe(observerRef.current);
     return () => observer.disconnect();
   }, [hasMore, isLoadingMore, loadMore]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    let finishTimeout: NodeJS.Timeout | null = null;
+
+    if (isFiltering || isLoadingMore) {
+      setShowProgress(true);
+      setProgress((prev) => (prev < 15 ? 15 : prev));
+      interval = setInterval(
+        () => setProgress((prev) => Math.min(prev + 12, 90)),
+        200
+      );
+    } else if (showProgress) {
+      setProgress(100);
+      finishTimeout = setTimeout(() => {
+        setShowProgress(false);
+        setProgress(0);
+      }, 300);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+      if (finishTimeout) clearTimeout(finishTimeout);
+    };
+  }, [isFiltering, isLoadingMore, showProgress]);
+
   return (
     <div className="space-y-6">
+      {showProgress ? (
+        <div className="fixed left-0 right-0 top-0 z-50 h-1 bg-base-300/40">
+          <div
+            className="h-full bg-primary transition-[width] duration-200 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      ) : null}
+
       <div className="navbar">
         <div className="flex-1 ">
           <div className="flex justify-between items-center">
