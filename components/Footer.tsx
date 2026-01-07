@@ -28,7 +28,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-base-100/70 p-2 shadow-inner">
+              <div className="rounded-2xl bg-base-100/70 p-3 shadow-inner flex items-center justify-center">
                 <Image
                   src={isLight ? "/dark-logo.png" : "/light-logo.png"}
                   alt="Rialo logo"
@@ -61,7 +61,7 @@ const Footer = () => {
             <div className="flex flex-col gap-2 text-sm">
               <a className="link link-hover">All Projects</a>
               <a className="link link-hover">Categories</a>
-              <a className="link link-hover">Top Builders</a>
+              {/* <a className="link link-hover">Top Builders</a> */}
               <a className="link link-hover">Submit a Build</a>
             </div>
           </nav>
@@ -71,10 +71,27 @@ const Footer = () => {
               Community
             </h6>
             <div className="flex flex-col gap-2 text-sm">
-              <a className="link link-hover">About Rialo</a>
-              <a className="link link-hover">Docs</a>
-              <a className="link link-hover">Events</a>
-              <a className="link link-hover">Contact</a>
+              {/* <a
+                href="https://x.com/RialoHQ"
+                target="_blank"
+                className="link link-hover"
+              >
+                Rialo X
+              </a>
+              <a
+                href="https://discord.gg/rialoprotocol"
+                target="_blank"
+                className="link link-hover"
+              >
+                Rialo Discord
+              </a> */}
+              <a
+                href="https://x.com/RialoBangladesh"
+                className="link link-hover"
+                target="_blank"
+              >
+                Rialo BD X
+              </a>
             </div>
           </nav>
 
@@ -96,7 +113,7 @@ const Footer = () => {
           <span>
             © {new Date().getFullYear()} Rialo Builder Hub. All rights reserved.
           </span>
-          <span>Built with Rialo • Crafted by the community</span>
+          <span>Built For Rialo • Crafted by the community</span>
         </div>
       </div>
     </footer>

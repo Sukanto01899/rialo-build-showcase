@@ -33,7 +33,6 @@ const SearchBar = ({ searchQuery = "", category = "" }: SearchBarProps) => {
     const queryString = params.toString();
     startTransition(() => {
       router.replace(queryString ? `/?${queryString}` : "/", { scroll: false });
-      router.refresh();
     });
   };
 
@@ -119,7 +118,7 @@ const SearchBar = ({ searchQuery = "", category = "" }: SearchBarProps) => {
                 <input
                   name="q"
                   placeholder="Search by project name or builder username"
-                  className="input w-full bg-base-100/90 border-base-300 text-base-content placeholder:text-base-content/60"
+                  className="input w-full bg-base-100/90 border-base-300 text-base-content placeholder:text-base-content/60 pr-14"
                   type="text"
                   value={query}
                   onChange={(event) => {
@@ -127,6 +126,20 @@ const SearchBar = ({ searchQuery = "", category = "" }: SearchBarProps) => {
                     setQuery(event.target.value);
                   }}
                 />
+                {query ? (
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm btn-square absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => {
+                      setQuery("");
+                      isTypingRef.current = false;
+                      updateUrl("", activeCategories);
+                    }}
+                    aria-label="Clear search"
+                  >
+                    X
+                  </button>
+                ) : null}
               </div>
             </label>
           </div>
