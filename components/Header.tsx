@@ -14,15 +14,17 @@ const Header = () => {
             <Image
               src={checked ? "/dark-logo.png" : "/light-logo.png"}
               alt="Rialo logo"
-              width={36}
-              height={36}
+              width={34}
+              height={34}
             />
           </div>
           <div className="leading-tight">
             <div className="text-sm uppercase tracking-[0.2em] text-base-content/60">
               Rialo
             </div>
-            <div className="text-lg font-semibold">Builder Showcase</div>
+            <div className="text-md md:text-lg font-semibold">
+              Builder Showcase
+            </div>
           </div>
         </Link>
         <div className="flex items-center gap-3">

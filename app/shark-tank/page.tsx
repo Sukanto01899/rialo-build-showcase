@@ -13,6 +13,7 @@ export const dynamic = "force-dynamic";
 
 export default async function SharkTankPage() {
   await dbConnect();
+
   const events = await SharkTankEvent.find({}).sort({ createdAt: -1 }).lean();
   const upcoming = events.filter((event) => event.status === "upcoming");
   const ended = events.filter((event) => event.status === "ended");

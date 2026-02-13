@@ -3,6 +3,7 @@ import SharkTankEvent from "@/model/SharkTankEvent";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { BiArrowBack } from "react-icons/bi";
 
 export const metadata: Metadata = {
   title: "Shark Tank Event | Rialo Builder Hub",
@@ -45,6 +46,7 @@ export default async function SharkTankEventPage({
     <div className="mx-auto w-full max-w-5xl px-4 md:px-6 lg:px-8 pt-24 pb-14 space-y-10">
       <div className="flex flex-wrap items-center gap-3">
         <Link className="btn btn-ghost btn-sm" href="/shark-tank">
+          <BiArrowBack />
           Back to Shark Tank
         </Link>
         <span className="badge badge-outline capitalize">{event.status}</span>
@@ -130,7 +132,9 @@ export default async function SharkTankEventPage({
             <p className="text-xs uppercase tracking-widest text-base-content/60">
               Hosted By
             </p>
-            <p className="mt-2 text-lg font-semibold">{event.hostBy || "TBA"}</p>
+            <p className="mt-2 text-lg font-semibold">
+              {event.hostBy || "TBA"}
+            </p>
           </div>
           <div className="rounded-2xl border border-base-300/60 bg-base-100 p-5">
             <p className="text-xs uppercase tracking-widest text-base-content/60">
