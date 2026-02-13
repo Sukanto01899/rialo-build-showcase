@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   const [isLight, setIsLight] = useState(false);
@@ -60,9 +61,11 @@ const Footer = () => {
             </h6>
             <div className="flex flex-col gap-2 text-sm">
               <a className="link link-hover">All Projects</a>
-              <a className="link link-hover">Categories</a>
-              {/* <a className="link link-hover">Top Builders</a> */}
-              <a className="link link-hover">Submit a Build</a>
+              {/* <a className="link link-hover">Categories</a> */}
+              <Link href="/shark-tank" className="link link-hover">
+                Shark Tank
+              </Link>
+              <a className="link link-hover">Submit Build</a>
             </div>
           </nav>
 

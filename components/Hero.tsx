@@ -12,7 +12,7 @@ type HeroProps = {
 const Hero = ({ searchQuery = "", category = "" }: HeroProps) => {
   const handleDialog = () => {
     const dialog = document.getElementById(
-      "build_submission"
+      "build_submission",
     ) as HTMLDialogElement;
     if (dialog) {
       dialog.showModal();
@@ -42,7 +42,8 @@ const Hero = ({ searchQuery = "", category = "" }: HeroProps) => {
           </h1>
           <p className="text-base text-base-content/70 sm:text-lg lg:text-xl">
             Explore real projects from the Rialo community. From DeFi protocols
-            to NFT platforms, find the builders and tools shaping what's next.
+            to NFT platforms, find the builders and tools shaping what&apos;s
+            next.
           </p>
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <button onClick={handleExplore} className="btn btn-primary">

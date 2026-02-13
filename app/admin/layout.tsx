@@ -23,6 +23,9 @@ export default function AdminLayout({
             <Link className="btn btn-ghost justify-start" href="/admin/projects">
               Projects
             </Link>
+            <Link className="btn btn-ghost justify-start" href="/admin/shark-tank">
+              Shark Tank
+            </Link>
             <Link className="btn btn-ghost justify-start" href="/admin/submissions">
               Submissions
             </Link>
