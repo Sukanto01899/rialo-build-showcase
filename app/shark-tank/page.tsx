@@ -84,7 +84,7 @@ export default async function SharkTankPage() {
 
       <section className="space-y-4">
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <h2 className="text-2xl font-semibold">Latest Upcoming Event</h2>
+          <h2 className="text-2xl font-semibold">Upcoming Event</h2>
           <p className="text-sm text-base-content/60">
             The next weekly Shark Tank session.
           </p>
@@ -132,7 +132,7 @@ export default async function SharkTankPage() {
                   />
                   <Link
                     className="btn btn-primary w-full"
-                    href="https://discord.gg/monad"
+                    href="https://discord.gg/Yk6BHPQnvm"
                     target="_blank"
                     rel="noreferrer"
                   >

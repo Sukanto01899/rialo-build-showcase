@@ -68,7 +68,7 @@ export default async function SharkTankEventPage({
               {event.status !== "ended" ? (
                 <Link
                   className="btn btn-primary"
-                  href="https://discord.gg/monad"
+                  href="https://discord.gg/rialo"
                   target="_blank"
                   rel="noreferrer"
                 >
