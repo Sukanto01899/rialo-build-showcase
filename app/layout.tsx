@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { FingerprintProvider } from "@/contexts/FingerprintContext";
+import AuthSessionProvider from "@/components/providers/SessionProvider";
 
 const geistSans = Ubuntu({
   variable: "--font-sans-code",
@@ -31,11 +32,13 @@ export default function RootLayout({
     <html lang="en" data-theme="rialodark">
       <body className={`${geistSans.variable} antialiased`}>
         <FingerprintProvider>
-          <Header />
-          {children}
-          <Footer />
+          <AuthSessionProvider>
+            <Header />
+            {children}
+            <Footer />
 
-          <div id="portal"></div>
+            <div id="portal"></div>
+          </AuthSessionProvider>
         </FingerprintProvider>
       </body>
     </html>

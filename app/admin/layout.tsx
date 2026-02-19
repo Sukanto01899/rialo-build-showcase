@@ -20,16 +20,29 @@ export default function AdminLayout({
             <Link className="btn btn-ghost justify-start" href="/admin">
               Dashboard
             </Link>
-            <Link className="btn btn-ghost justify-start" href="/admin/projects">
+            <Link
+              className="btn btn-ghost justify-start"
+              href="/admin/projects"
+            >
               Projects
             </Link>
-            <Link className="btn btn-ghost justify-start" href="/admin/shark-tank">
+            <Link
+              className="btn btn-ghost justify-start"
+              href="/admin/shark-tank"
+            >
               Shark Tank
             </Link>
-            <Link className="btn btn-ghost justify-start" href="/admin/submissions">
+
+            <Link
+              className="btn btn-ghost justify-start"
+              href="/admin/submissions"
+            >
               Submissions
             </Link>
-            <Link className="btn btn-ghost justify-start" href="/admin/add-project">
+            <Link
+              className="btn btn-ghost justify-start"
+              href="/admin/add-project"
+            >
               Add Project
             </Link>
           </nav>
