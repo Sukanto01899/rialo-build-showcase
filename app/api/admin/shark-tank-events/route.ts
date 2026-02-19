@@ -22,19 +22,35 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     await dbConnect();
 
-    const status = data.status === "ended" ? "ended" : "upcoming";
+    const explicitWeek = Number.isFinite(Number(data.weekNumber))
+      ? Number(data.weekNumber)
+      : undefined;
+    let weekNumber = explicitWeek;
+    if (!weekNumber) {
+      const latestWeek = await SharkTankEvent.findOne({
+        weekNumber: { $exists: true },
+      })
+        .sort({ weekNumber: -1 })
+        .select("weekNumber")
+        .lean();
+      weekNumber = latestWeek?.weekNumber ? latestWeek.weekNumber + 1 : 1;
+    }
 
     const event = await SharkTankEvent.create({
       title: data.title,
       description: data.description,
-      startDate: data.startDate ? new Date(data.startDate) : undefined,
       image: data.image,
       hostTwitter: data.hostTwitter,
       hostGithub: data.hostGithub,
       hostBy: data.hostBy,
       websiteLink: data.websiteLink,
       location: data.location,
-      status,
+      weekNumber,
+      winnerTitle: data.winnerTitle,
+      winnerTagline: data.winnerTagline,
+      winnerBy: data.winnerBy,
+      winnerLink: data.winnerLink,
+      winnerImage: data.winnerImage,
     });
 
     return NextResponse.json({
@@ -60,10 +76,7 @@ export async function GET(req: NextRequest) {
 
   try {
     await dbConnect();
-    const status = req.nextUrl.searchParams.get("status");
-    const filter =
-      status === "upcoming" || status === "ended" ? { status } : {};
-    const events = await SharkTankEvent.find(filter).sort({ createdAt: -1 });
+    const events = await SharkTankEvent.find({}).sort({ createdAt: -1 });
 
     return NextResponse.json({ success: true, events });
   } catch (error) {
@@ -83,31 +96,16 @@ export async function PATCH(req: NextRequest) {
   try {
     const data = await req.json();
     const id = data.id as string | undefined;
-    const status = data.status as string | undefined;
-
-    if (!id || !status) {
+    if (!id) {
       return NextResponse.json(
-        { error: "Event id and status required" },
+        { error: "Event id required" },
         { status: 400 }
       );
     }
-
-    if (!["upcoming", "ended"].includes(status)) {
-      return NextResponse.json({ error: "Invalid status" }, { status: 400 });
-    }
-
-    await dbConnect();
-    const event = await SharkTankEvent.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true }
+    return NextResponse.json(
+      { error: "Status updates are disabled" },
+      { status: 400 }
     );
-
-    if (!event) {
-      return NextResponse.json({ error: "Event not found" }, { status: 404 });
-    }
-
-    return NextResponse.json({ success: true, event });
   } catch (error) {
     console.error("Admin shark tank update error:", error);
     return NextResponse.json(
@@ -160,19 +158,25 @@ export async function PUT(req: NextRequest) {
 
     await dbConnect();
 
-    const status = data.status === "ended" ? "ended" : "upcoming";
+    const weekNumber = Number.isFinite(Number(data.weekNumber))
+      ? Number(data.weekNumber)
+      : undefined;
 
     const update = {
       title: data.title,
       description: data.description,
-      startDate: data.startDate ? new Date(data.startDate) : undefined,
       image: data.image,
       hostTwitter: data.hostTwitter,
       hostGithub: data.hostGithub,
       hostBy: data.hostBy,
       websiteLink: data.websiteLink,
       location: data.location,
-      status,
+      weekNumber,
+      winnerTitle: data.winnerTitle,
+      winnerTagline: data.winnerTagline,
+      winnerBy: data.winnerBy,
+      winnerLink: data.winnerLink,
+      winnerImage: data.winnerImage,
     };
 
     const event = await SharkTankEvent.findByIdAndUpdate(id, update, {
