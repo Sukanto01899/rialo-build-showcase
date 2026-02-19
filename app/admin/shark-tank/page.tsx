@@ -16,8 +16,10 @@ export default async function AdminSharkTankPage() {
   await dbConnect();
   const events = await SharkTankEvent.find({}).sort({ createdAt: -1 }).lean();
   const safeEvents: AdminSharkTankEvent[] = events.map((event) => ({
-    ...event,
     _id: String(event._id),
+    title: event.title,
+    startDate: event.startDate,
+    createdAt: event.createdAt,
   }));
 
   return (
@@ -26,7 +28,7 @@ export default async function AdminSharkTankPage() {
         <div>
           <h1 className="text-3xl font-semibold">Shark Tank Events</h1>
           <p className="text-base-content/70">
-            Manage Shark Tank event listings and status.
+        Manage Shark Tank event listings.
           </p>
         </div>
         <Link className="btn btn-primary" href="/admin/shark-tank/new">

@@ -36,7 +36,7 @@ export default async function AdminSharkTankEditPage({
       <div>
         <h1 className="text-3xl font-semibold">Edit Shark Tank Event</h1>
         <p className="text-base-content/70">
-          Update event details and status.
+          Update event details.
         </p>
       </div>
 

@@ -27,25 +27,30 @@ const AddSharkTankEventForm = () => {
     const payload = {
       title: formData.get("title")?.toString().trim(),
       description: formData.get("description")?.toString().trim(),
-      startDate: formData.get("startDate")?.toString().trim(),
       image: formData.get("image")?.toString().trim(),
       hostTwitter: formData.get("hostTwitter")?.toString().trim(),
       hostGithub: formData.get("hostGithub")?.toString().trim(),
       hostBy: formData.get("hostBy")?.toString().trim(),
       websiteLink: formData.get("websiteLink")?.toString().trim(),
       location: formData.get("location")?.toString().trim(),
-      status: formData.get("status")?.toString().trim(),
+      winnerTitle: formData.get("winnerTitle")?.toString().trim(),
+      winnerTagline: formData.get("winnerTagline")?.toString().trim(),
+      winnerBy: formData.get("winnerBy")?.toString().trim(),
+      winnerLink: formData.get("winnerLink")?.toString().trim(),
+      winnerImage: formData.get("winnerImage")?.toString().trim(),
     };
 
-    if (!payload.title || !payload.description || !payload.startDate) {
+    if (!payload.title || !payload.description) {
       setStatus("error");
-      setMessage("Title, description, and start date are required.");
+      setMessage("Title and description are required.");
       return;
     }
 
     const optionalUrls = [
       { value: payload.image, label: "Event image URL" },
       { value: payload.websiteLink, label: "Website link" },
+      { value: payload.winnerLink, label: "Winner project link" },
+      { value: payload.winnerImage, label: "Winner image URL" },
     ];
     for (const item of optionalUrls) {
       if (item.value && !isValidUrl(item.value)) {
@@ -100,13 +105,6 @@ const AddSharkTankEventForm = () => {
       />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <input
-          name="startDate"
-          type="date"
-          className="input w-full"
-          placeholder="Start date"
-          required
-        />
-        <input
           name="location"
           type="text"
           className="input w-full"
@@ -145,11 +143,49 @@ const AddSharkTankEventForm = () => {
           placeholder="Website link"
         />
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <select name="status" className="select w-full" defaultValue="upcoming">
-          <option value="upcoming">Upcoming</option>
-          <option value="ended">Ended</option>
-        </select>
+      <div className="rounded-2xl border border-base-300/60 p-4">
+        <div className="mb-3 text-xs uppercase tracking-[0.2em] text-base-content/60">
+          Weekly Winner (Optional)
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <input
+            name="winnerTitle"
+            type="text"
+            className="input w-full"
+            placeholder="Winner project name"
+            maxLength={120}
+          />
+          <input
+            name="winnerTagline"
+            type="text"
+            className="input w-full"
+            placeholder="Winner tagline"
+            maxLength={160}
+          />
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <input
+            name="winnerBy"
+            type="text"
+            className="input w-full"
+            placeholder="Built by / Team"
+            maxLength={120}
+          />
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <input
+            name="winnerLink"
+            type="url"
+            className="input w-full"
+            placeholder="Winner project link"
+          />
+          <input
+            name="winnerImage"
+            type="url"
+            className="input w-full"
+            placeholder="Winner image URL"
+          />
+        </div>
       </div>
       <div className="flex items-center gap-4">
         <button

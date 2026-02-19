@@ -49,7 +49,9 @@ export default async function SharkTankEventPage({
           <BiArrowBack />
           Back to Shark Tank
         </Link>
-        <span className="badge badge-outline capitalize">{event.status}</span>
+        {event.weekNumber ? (
+          <span className="badge badge-outline">{`Week ${event.weekNumber} Winner`}</span>
+        ) : null}
       </div>
 
       <section className="relative overflow-hidden rounded-3xl border border-base-300/60 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 p-6 md:p-10">
@@ -65,16 +67,14 @@ export default async function SharkTankEventPage({
               {event.description}
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              {event.status !== "ended" ? (
-                <Link
-                  className="btn btn-primary"
-                  href="https://discord.gg/rialo"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Join Now
-                </Link>
-              ) : null}
+              <Link
+                className="btn btn-primary"
+                href="https://discord.gg/rialo"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Join Now
+              </Link>
               {event.websiteLink ? (
                 <a
                   className="btn btn-ghost border border-base-300/70 hover:border-primary/40"
@@ -108,10 +108,10 @@ export default async function SharkTankEventPage({
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-base-300/60 bg-base-100 p-5">
             <p className="text-xs uppercase tracking-widest text-base-content/60">
-              Start Date
+              Date Created
             </p>
             <p className="mt-2 text-lg font-semibold">
-              {formatDate(event.startDate)}
+              {formatDate(event.createdAt)}
             </p>
           </div>
           <div className="rounded-2xl border border-base-300/60 bg-base-100 p-5">

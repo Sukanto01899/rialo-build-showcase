@@ -10,7 +10,12 @@ export interface ISharkTankEvent extends Document {
   hostBy?: string;
   websiteLink?: string;
   location?: string;
-  status: "upcoming" | "ended";
+  weekNumber?: number;
+  winnerTitle?: string;
+  winnerTagline?: string;
+  winnerBy?: string;
+  winnerLink?: string;
+  winnerImage?: string;
   createdAt: Date;
 }
 
@@ -24,11 +29,12 @@ const SharkTankEventSchema = new mongoose.Schema<ISharkTankEvent>({
   hostBy: { type: String },
   websiteLink: { type: String },
   location: { type: String },
-  status: {
-    type: String,
-    enum: ["upcoming", "ended"],
-    default: "upcoming",
-  },
+  weekNumber: { type: Number },
+  winnerTitle: { type: String },
+  winnerTagline: { type: String },
+  winnerBy: { type: String },
+  winnerLink: { type: String },
+  winnerImage: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
 
