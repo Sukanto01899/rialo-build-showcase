@@ -91,7 +91,7 @@ export default async function SharkTankPage() {
     <div className="mx-auto w-full max-w-6xl px-4 md:px-6 lg:px-8 pt-20 pb-16 space-y-12">
       <section className="relative overflow-hidden rounded-[32px] border border-base-300/60 bg-base-100/60 p-8 md:p-12 lg:p-14 shark-hero pattern-background shark-hero-blur shark-hero-bg">
         <div className="hero-overlay rounded-[32px]"></div>
-        <div className="relative z-10 grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative z-10 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] shark-hero-content">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-base-300/60 bg-base-100/70 px-4 py-2 text-xs uppercase tracking-[0.32em] text-base-content/70">
               Builder Arena

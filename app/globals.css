@@ -198,6 +198,7 @@ html {
 }
 
 .shark-hero-blur {
+  position: relative;
   backdrop-filter: blur(34px) saturate(140%);
   background: rgba(5, 5, 5, 0.85);
 }
@@ -210,6 +211,7 @@ html {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   background: linear-gradient(
     135deg,
     rgba(0, 0, 0, 0.9),
@@ -231,12 +233,28 @@ html {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   background: linear-gradient(
     115deg,
     rgba(255, 255, 255, 0.18),
     rgba(255, 255, 255, 0.02)
   );
   pointer-events: none;
+}
+
+.shark-hero-blur > * {
+  position: relative;
+  z-index: 1;
+}
+
+.shark-hero-content {
+  color: rgb(255 255 255 / 0.95);
+  text-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="rialolight"] .shark-hero-content {
+  color: rgb(10 10 10 / 0.9);
+  text-shadow: 0 8px 18px rgba(255, 255, 255, 0.6);
 }
 
 .shark-card {
