@@ -190,8 +190,8 @@ export default async function SharkTankPage() {
             body: "Submit a short deck, demo live, then unlock tailored feedback from the builder jury.",
           },
           {
-            title: "Community Vote",
-            body: "The audience scores on clarity, traction, and ambition. Winning builds get spotlighted.",
+            title: "Community Spotlight",
+            body: "The audience celebrates standout builds and shares feedback to level them up.",
           },
           {
             title: "Growth Track",
