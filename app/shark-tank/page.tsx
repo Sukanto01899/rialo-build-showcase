@@ -26,7 +26,10 @@ export default async function SharkTankPage() {
     const aWeek = a.weekNumber ?? 0;
     const bWeek = b.weekNumber ?? 0;
     if (aWeek !== bWeek) return bWeek - aWeek;
-    return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+    return (
+      new Date(b.createdAt || 0).getTime() -
+      new Date(a.createdAt || 0).getTime()
+    );
   });
   const fallbackWeekMap = new Map<string, number>();
   winners.forEach((event, index) => {
@@ -40,7 +43,7 @@ export default async function SharkTankPage() {
 
   const renderEventCard = (
     event: (typeof events)[number],
-    variant: "previous" | "default" = "default"
+    variant: "previous" | "default" = "default",
   ) => (
     <Link
       key={String(event._id)}
@@ -79,13 +82,11 @@ export default async function SharkTankPage() {
           </div>
         ) : null}
         <div className="text-xs text-base-content/60 space-y-1">
-          {event.hostBy ? <div>Hosted by: {event.hostBy}</div> : null}
-          {event.location ? <div>Location: {event.location}</div> : null}
+          {event.hostBy ? <div>Builder: {event.hostBy}</div> : null}
         </div>
       </div>
     </Link>
   );
-
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 md:px-6 lg:px-8 pt-20 pb-16 space-y-12">
@@ -105,10 +106,10 @@ export default async function SharkTankPage() {
                 feedback, and the community crowns the most ambitious build.
               </p>
             </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <Link className="btn btn-primary" href="#upcoming">
-            See This Week
-          </Link>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link className="btn btn-primary" href="#upcoming">
+                See This Week
+              </Link>
               <Link
                 className="btn btn-ghost border border-base-300/70"
                 href="https://discord.gg/Yk6BHPQnvm"
@@ -129,7 +130,7 @@ export default async function SharkTankPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-widest text-base-content/60">
-                This Week's Winner
+                This Week&apos;s Winner
               </span>
               <span className="shark-pulse" aria-hidden="true"></span>
             </div>
@@ -209,7 +210,7 @@ export default async function SharkTankPage() {
 
       <section id="upcoming" className="space-y-4">
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <h2 className="text-2xl font-semibold">This Week's Winner</h2>
+          <h2 className="text-2xl font-semibold">This Week&apos;s Winner</h2>
           <p className="text-sm text-base-content/60">
             Latest weekly winner from the community.
           </p>
@@ -240,7 +241,7 @@ export default async function SharkTankPage() {
                   </div>
                 ) : currentWinner.hostBy ? (
                   <div className="text-sm text-base-content/70">
-                    Hosted by: {currentWinner.hostBy}
+                    Builder: {currentWinner.hostBy}
                   </div>
                 ) : null}
                 <div className="flex flex-wrap items-center gap-3">
@@ -269,15 +270,13 @@ export default async function SharkTankPage() {
                   target={currentWinner.winnerLink ? "_blank" : undefined}
                   rel={currentWinner.winnerLink ? "noreferrer" : undefined}
                 >
-                  {currentWinner.winnerLink ? "Open Project" : "Join Now"}
+                  {currentWinner.winnerLink ? "Open Project" : "View Project"}
                 </Link>
               </div>
             </div>
           </div>
         ) : (
-          <p className="text-sm text-base-content/60">
-            No weekly winner yet.
-          </p>
+          <p className="text-sm text-base-content/60">No weekly winner yet.</p>
         )}
       </section>
 

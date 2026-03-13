@@ -58,7 +58,7 @@ export default async function SharkTankEventPage({
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
           <div className="space-y-5">
             <div className="inline-flex items-center gap-2 rounded-full border border-base-300/60 bg-base-100/70 px-4 py-2 text-xs uppercase tracking-[0.2em] text-base-content/70">
-              Shark Tank Event
+              Shark Tank Project
             </div>
             <h1 className="text-3xl font-semibold leading-tight md:text-4xl lg:text-5xl">
               {event.title}
@@ -67,14 +67,14 @@ export default async function SharkTankEventPage({
               {event.description}
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <Link
+              {/* <Link
                 className="btn btn-primary"
                 href="https://discord.gg/rialo"
                 target="_blank"
                 rel="noreferrer"
               >
                 Join Now
-              </Link>
+              </Link> */}
               {event.websiteLink ? (
                 <a
                   className="btn btn-ghost border border-base-300/70 hover:border-primary/40"
@@ -104,7 +104,7 @@ export default async function SharkTankEventPage({
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Event Details</h2>
+        <h2 className="text-2xl font-semibold">Project Details</h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-base-300/60 bg-base-100 p-5">
             <p className="text-xs uppercase tracking-widest text-base-content/60">
@@ -126,11 +126,10 @@ export default async function SharkTankEventPage({
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Host</h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-base-300/60 bg-base-100 p-5">
             <p className="text-xs uppercase tracking-widest text-base-content/60">
-              Hosted By
+              Builder name
             </p>
             <p className="mt-2 text-lg font-semibold">
               {event.hostBy || "TBA"}
@@ -138,7 +137,7 @@ export default async function SharkTankEventPage({
           </div>
           <div className="rounded-2xl border border-base-300/60 bg-base-100 p-5">
             <p className="text-xs uppercase tracking-widest text-base-content/60">
-              Host Twitter
+              Builder Twitter
             </p>
             {event.hostTwitter ? (
               <a
@@ -161,7 +160,7 @@ export default async function SharkTankEventPage({
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-base-300/60 bg-base-100 p-5">
             <p className="text-xs uppercase tracking-widest text-base-content/60">
-              Host GitHub
+              GitHub
             </p>
             {event.hostGithub ? (
               <a
