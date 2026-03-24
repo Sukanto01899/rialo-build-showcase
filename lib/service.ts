@@ -13,6 +13,9 @@ const baseUrl = deploymentUrl
 type ProjectQuery = {
   query?: string;
   category?: string;
+  year?: string;
+  month?: string;
+  week?: string;
   page?: number;
   limit?: number;
 };
@@ -28,6 +31,9 @@ export async function getAllProjects(params?: ProjectQuery) {
   const searchParams = new URLSearchParams();
   if (params?.query) searchParams.set("q", params.query);
   if (params?.category) searchParams.set("category", params.category);
+  if (params?.year) searchParams.set("year", params.year);
+  if (params?.month) searchParams.set("month", params.month);
+  if (params?.week) searchParams.set("week", params.week);
   if (params?.page) searchParams.set("page", String(params.page));
   if (params?.limit) searchParams.set("limit", String(params.limit));
   const queryString = searchParams.toString();

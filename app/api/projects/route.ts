@@ -55,6 +55,9 @@ export async function GET(req: NextRequest) {
 
     const searchQuery = req.nextUrl.searchParams.get("q")?.trim();
     const categoryParam = req.nextUrl.searchParams.get("category")?.trim();
+    const yearParam = req.nextUrl.searchParams.get("year")?.trim();
+    const monthParam = req.nextUrl.searchParams.get("month")?.trim();
+    const weekParam = req.nextUrl.searchParams.get("week")?.trim();
     const pageParam = req.nextUrl.searchParams.get("page");
     const limitParam = req.nextUrl.searchParams.get("limit");
     const page = Math.max(1, Number(pageParam) || 1);
@@ -84,12 +87,50 @@ export async function GET(req: NextRequest) {
         .filter(Boolean);
 
       if (categories.length > 0) {
-      const categoryRegexes = categories.map((category) => {
-        const escaped = category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        return new RegExp(`(^|[\\s,])${escaped}([\\s,]|$)`, "i");
-      });
-      filter.category = { $in: categoryRegexes };
+        const categoryRegexes = categories.map((category) => {
+          const escaped = category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          return new RegExp(`(^|[\\s,])${escaped}([\\s,]|$)`, "i");
+        });
+        filter.category = { $in: categoryRegexes };
+      }
     }
+
+    const yearValue = yearParam ? Number(yearParam) : NaN;
+    const monthValue = monthParam ? Number(monthParam) : NaN;
+    const weekValue = weekParam ? Number(weekParam) : NaN;
+    const hasValidYear = Number.isFinite(yearValue);
+    const hasValidMonth =
+      Number.isFinite(monthValue) && monthValue >= 1 && monthValue <= 12;
+    const hasValidWeek =
+      Number.isFinite(weekValue) && weekValue >= 1 && weekValue <= 5;
+
+    const dateExprFilters: Record<string, unknown>[] = [];
+
+    if (hasValidYear) {
+      dateExprFilters.push({ $eq: [{ $year: "$createdAt" }, yearValue] });
+    }
+
+    if (hasValidMonth) {
+      dateExprFilters.push({ $eq: [{ $month: "$createdAt" }, monthValue] });
+    }
+
+    if (hasValidWeek) {
+      dateExprFilters.push({
+        $eq: [
+          {
+            $ceil: {
+              $divide: [{ $dayOfMonth: "$createdAt" }, 7],
+            },
+          },
+          weekValue,
+        ],
+      });
+    }
+
+    if (dateExprFilters.length === 1) {
+      filter.$expr = dateExprFilters[0];
+    } else if (dateExprFilters.length > 1) {
+      filter.$expr = { $and: dateExprFilters };
     }
 
     const total = await Project.countDocuments(filter);

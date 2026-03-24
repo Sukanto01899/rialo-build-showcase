@@ -7,9 +7,18 @@ import SubmissionForm from "./SubmissionForm";
 type HeroProps = {
   searchQuery?: string;
   category?: string;
+  year?: string;
+  month?: string;
+  week?: string;
 };
 
-const Hero = ({ searchQuery = "", category = "" }: HeroProps) => {
+const Hero = ({
+  searchQuery = "",
+  category = "",
+  year = "",
+  month = "",
+  week = "",
+}: HeroProps) => {
   const handleDialog = () => {
     const dialog = document.getElementById(
       "build_submission",
@@ -58,7 +67,13 @@ const Hero = ({ searchQuery = "", category = "" }: HeroProps) => {
           </div>
         </div>
 
-        <SearchBar searchQuery={searchQuery} category={category} />
+        <SearchBar
+          searchQuery={searchQuery}
+          category={category}
+          year={year}
+          month={month}
+          week={week}
+        />
       </div>
       <SubmissionForm />
     </div>

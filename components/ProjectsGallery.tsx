@@ -11,6 +11,9 @@ type ProjectsGalleryProps = {
   total?: number;
   searchQuery?: string;
   category?: string;
+  year?: string;
+  month?: string;
+  week?: string;
 };
 
 const ProjectsGallery = ({
@@ -18,10 +21,16 @@ const ProjectsGallery = ({
   total = 0,
   searchQuery = "",
   category = "",
+  year = "",
+  month = "",
+  week = "",
 }: ProjectsGalleryProps) => {
   const searchParams = useSearchParams();
   const activeQuery = searchParams.get("q") ?? searchQuery;
   const activeCategory = searchParams.get("category") ?? category;
+  const activeYear = searchParams.get("year") ?? year;
+  const activeMonth = searchParams.get("month") ?? month;
+  const activeWeek = searchParams.get("week") ?? week;
   const [viewType, setViewType] = useState<"grid" | "list">("grid");
   const [items, setItems] = useState<IProject[]>(projects ?? []);
   const [page, setPage] = useState(1);
@@ -34,7 +43,9 @@ const ProjectsGallery = ({
   const observerRef = useRef<HTMLDivElement | null>(null);
   const latestItemsRef = useRef<IProject[]>(projects ?? []);
   const projectCount = items.length;
-  const isFiltered = Boolean(activeQuery || activeCategory);
+  const isFiltered = Boolean(
+    activeQuery || activeCategory || activeYear || activeMonth || activeWeek
+  );
 
   useEffect(() => {
     setItems(projects ?? []);
@@ -50,9 +61,12 @@ const ProjectsGallery = ({
   useEffect(() => {
     const query = activeQuery.trim();
     const categoryValue = activeCategory.trim();
+    const yearValue = activeYear.trim();
+    const monthValue = activeMonth.trim();
+    const weekValue = activeWeek.trim();
 
     // Skip client refetch when no filters are applied to avoid unnecessary flashes.
-    if (!query && !categoryValue) {
+    if (!query && !categoryValue && !yearValue && !monthValue && !weekValue) {
       setIsFiltering(false);
       return;
     }
@@ -60,6 +74,9 @@ const ProjectsGallery = ({
     const params = new URLSearchParams();
     if (query) params.set("q", query);
     if (categoryValue) params.set("category", categoryValue);
+    if (yearValue) params.set("year", yearValue);
+    if (monthValue) params.set("month", monthValue);
+    if (weekValue) params.set("week", weekValue);
     params.set("page", "1");
     params.set("limit", "10");
 
@@ -112,7 +129,7 @@ const ProjectsGallery = ({
       isAborted = true;
       controller.abort();
     };
-  }, [activeQuery, activeCategory]);
+  }, [activeQuery, activeCategory, activeMonth, activeWeek, activeYear]);
 
   const loadMore = useCallback(async () => {
     if (isLoadingMore || !hasMore) return;
@@ -122,6 +139,9 @@ const ProjectsGallery = ({
     const params = new URLSearchParams();
     if (activeQuery) params.set("q", activeQuery);
     if (activeCategory) params.set("category", activeCategory);
+    if (activeYear) params.set("year", activeYear);
+    if (activeMonth) params.set("month", activeMonth);
+    if (activeWeek) params.set("week", activeWeek);
     params.set("page", String(nextPage));
     params.set("limit", "10");
 
@@ -154,7 +174,17 @@ const ProjectsGallery = ({
     } finally {
       setIsLoadingMore(false);
     }
-  }, [activeCategory, activeQuery, hasMore, isLoadingMore, page, totalCount]);
+  }, [
+    activeCategory,
+    activeMonth,
+    activeQuery,
+    activeWeek,
+    activeYear,
+    hasMore,
+    isLoadingMore,
+    page,
+    totalCount,
+  ]);
 
   useEffect(() => {
     if (!observerRef.current) return;
@@ -246,6 +276,10 @@ const ProjectsGallery = ({
                 Found {projectCount} project{projectCount === 1 ? "" : "s"}
                 {activeQuery ? ` for "${activeQuery}"` : ""}
                 {activeCategory ? ` in ${activeCategory}` : ""}
+                {activeYear ? ` (${activeYear}` : ""}
+                {activeMonth ? `/${activeMonth}` : activeYear ? "" : ""}
+                {activeWeek ? ` week ${activeWeek}` : ""}
+                {activeYear ? `)` : ""}
               </>
             ) : (
               <>

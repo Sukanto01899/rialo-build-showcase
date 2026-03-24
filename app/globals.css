@@ -120,6 +120,45 @@ html {
   /* Add any custom CSS for dark theme here */
 }
 
+.rialo-datepicker {
+  border: 0 !important;
+  background: transparent !important;
+  font-family: inherit !important;
+}
+
+.rialo-datepicker .react-datepicker__month-container {
+  background: transparent;
+}
+
+.rialo-datepicker .react-datepicker__header {
+  background: transparent;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-base-300) 60%, transparent);
+}
+
+.rialo-datepicker .react-datepicker__current-month,
+.rialo-datepicker .react-datepicker-time__header,
+.rialo-datepicker .react-datepicker-year-header,
+.rialo-datepicker .react-datepicker__day-name,
+.rialo-datepicker .react-datepicker__day,
+.rialo-datepicker .react-datepicker__navigation-icon::before {
+  color: var(--color-base-content);
+}
+
+.rialo-datepicker .react-datepicker__day:hover,
+.rialo-datepicker .react-datepicker__month-text:hover,
+.rialo-datepicker .react-datepicker__quarter-text:hover,
+.rialo-datepicker .react-datepicker__year-text:hover {
+  background: color-mix(in oklab, var(--color-base-300) 70%, transparent);
+  border-radius: 0.5rem;
+}
+
+.rialo-datepicker .react-datepicker__day--selected,
+.rialo-datepicker .react-datepicker__day--keyboard-selected {
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+  border-radius: 0.5rem;
+}
+
 [data-theme="rialolight"] {
   /* Add any custom CSS for light theme here */
 }
