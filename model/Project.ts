@@ -6,6 +6,7 @@ export interface IProject extends Document {
   slug: string;
   description: string;
   thumbnail: string;
+  video_url?: string;
   gitRepo: string;
   liveLink: string;
   verified: boolean;
@@ -34,6 +35,7 @@ const ProjectSchema = new mongoose.Schema<IProject>({
   slug: String,
   description: String,
   thumbnail: String,
+  video_url: String,
   gitRepo: String,
   liveLink: String,
 

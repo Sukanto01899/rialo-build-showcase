@@ -11,6 +11,7 @@ export interface ISubmission extends Document {
   githubUrl: string;
   liveUrl?: string;
   imageUrl?: string;
+  videoUrl?: string;
   status: "pending" | "reviewed";
   createdAt: Date;
 }
@@ -26,6 +27,7 @@ const SubmissionSchema = new mongoose.Schema<ISubmission>({
   githubUrl: { type: String, required: true },
   liveUrl: { type: String },
   imageUrl: { type: String },
+  videoUrl: { type: String },
   status: {
     type: String,
     enum: ["pending", "reviewed"],

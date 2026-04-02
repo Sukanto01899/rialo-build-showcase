@@ -28,6 +28,7 @@ const SubmissionForm = () => {
       githubUrl: formData.get("githubUrl")?.toString().trim(),
       liveUrl: formData.get("liveUrl")?.toString().trim(),
       imageUrl: formData.get("imageUrl")?.toString().trim(),
+      videoUrl: formData.get("videoUrl")?.toString().trim(),
     };
 
     const requiredValues = [
@@ -157,6 +158,12 @@ const SubmissionForm = () => {
               type="url"
               className="input validator w-full"
               placeholder="Image URL"
+            />
+            <input
+              name="videoUrl"
+              type="url"
+              className="input validator w-full"
+              placeholder="YouTube demo video URL (optional)"
             />
             <div className="modal-action">
               <button

@@ -8,6 +8,42 @@ import BuilderProfile from "./BuilderProfile";
 import { getGitHubRepoFromUrl } from "@/lib/github";
 import { calculateRating } from "@/lib/rating";
 
+const getYouTubeEmbedUrl = (rawUrl?: string) => {
+  if (!rawUrl) return null;
+  const trimmed = rawUrl.trim();
+  if (!trimmed) return null;
+
+  try {
+    const url = new URL(trimmed);
+    const hostname = url.hostname.replace(/^www\./i, "");
+
+    if (hostname === "youtu.be") {
+      const id = url.pathname.replace("/", "");
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+
+    if (hostname === "youtube.com") {
+      if (url.pathname.startsWith("/embed/")) {
+        return trimmed;
+      }
+
+      if (url.pathname.startsWith("/watch")) {
+        const id = url.searchParams.get("v");
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+
+      if (url.pathname.startsWith("/shorts/") || url.pathname.startsWith("/live/")) {
+        const id = url.pathname.split("/")[2];
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+    }
+
+    return trimmed;
+  } catch {
+    return null;
+  }
+};
+
 const ProjectView = ({ project }: { project: IProject }) => {
   const { fingerprint, isLoading } = useFingerprint();
   const [loves, setLoves] = useState(project.loves || 0);
@@ -135,6 +171,8 @@ const ProjectView = ({ project }: { project: IProject }) => {
     }
   };
 
+  const videoEmbedUrl = getYouTubeEmbedUrl(project.video_url);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
       <div className="col-span-1 lg:col-span-2 space-y-6">
@@ -146,9 +184,10 @@ const ProjectView = ({ project }: { project: IProject }) => {
           rating={rating}
           hasLoved={hasLoved}
           onToggleLove={handleLoveToggle}
+          videoEmbedUrl={videoEmbedUrl}
         />
       </div>
-      <div className="col-span-1 lg:sticky lg:top-24 h-fit">
+      <div className="col-span-1 lg:sticky lg:top-24 h-fit space-y-6">
         <BuilderProfile
           project={project}
           loves={loves}

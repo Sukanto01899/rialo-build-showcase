@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
       title: data.title,
       description: data.description,
       thumbnail: data.thumbnail,
+      video_url: data.video_url || data.videoUrl,
       gitRepo: data.gitRepo,
       liveLink: data.liveLink,
       category: normalizeList(data.category),

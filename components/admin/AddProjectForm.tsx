@@ -19,6 +19,7 @@ const AddProjectForm = () => {
       title: formData.get("title")?.toString().trim(),
       description: formData.get("description")?.toString().trim(),
       thumbnail: formData.get("thumbnail")?.toString().trim(),
+      video_url: formData.get("video_url")?.toString().trim(),
       gitRepo: formData.get("gitRepo")?.toString().trim(),
       liveLink: formData.get("liveLink")?.toString().trim(),
       category: formData.get("category")?.toString().trim(),
@@ -148,6 +149,12 @@ const AddProjectForm = () => {
           placeholder="Live URL"
         />
       </div>
+      <input
+        name="video_url"
+        type="url"
+        className="input w-full"
+        placeholder="YouTube demo video URL (optional)"
+      />
       <input
         name="thumbnail"
         type="url"

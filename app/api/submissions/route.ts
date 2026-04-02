@@ -35,6 +35,8 @@ export async function POST(req: NextRequest) {
     const liveUrl = typeof data.liveUrl === "string" ? data.liveUrl.trim() : "";
     const imageUrl =
       typeof data.imageUrl === "string" ? data.imageUrl.trim() : "";
+    const videoUrl =
+      typeof data.videoUrl === "string" ? data.videoUrl.trim() : "";
     const category = normalizeList(data.category);
     const tech = normalizeList(data.tech);
     const tags = normalizeList(data.tags);
@@ -66,6 +68,7 @@ export async function POST(req: NextRequest) {
       githubUrl,
       liveUrl,
       imageUrl,
+      videoUrl,
       status: "pending",
     });
 

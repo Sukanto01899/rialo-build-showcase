@@ -12,6 +12,7 @@ type ProjectDetailsProps = {
   rating: number;
   hasLoved: boolean;
   onToggleLove: () => void;
+  videoEmbedUrl?: string | null;
 };
 
 const ProjectDetails = ({
@@ -22,6 +23,7 @@ const ProjectDetails = ({
   rating,
   hasLoved,
   onToggleLove,
+  videoEmbedUrl,
 }: ProjectDetailsProps) => {
   const tags = project.tags || [];
   const categories = project.category || [];
@@ -87,6 +89,26 @@ const ProjectDetails = ({
           )}
         </figure>
       </div>
+
+      {videoEmbedUrl ? (
+        <div className="card bg-base-200 overflow-hidden">
+          <div className="card-body pb-3">
+            <h2 className="card-title">Demo Video</h2>
+            <p className="text-sm text-base-content/70">
+              Watch the project in action.
+            </p>
+          </div>
+          <div className="aspect-video w-full">
+            <iframe
+              className="h-full w-full"
+              src={videoEmbedUrl}
+              title={`${project.title} demo video`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      ) : null}
 
       <div className="card bg-base-200">
         <div className="card-body space-y-4">
