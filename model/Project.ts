@@ -19,6 +19,7 @@ export interface IProject extends Document {
     name: string;
     email: string;
     username: string;
+    discordUsername: string;
     image: string;
     xLink: string;
     about: string;
@@ -54,6 +55,7 @@ const ProjectSchema = new mongoose.Schema<IProject>({
     name: String,
     email: String,
     username: String,
+    discordUsername: String,
     image: String,
     xLink: String,
     about: String,

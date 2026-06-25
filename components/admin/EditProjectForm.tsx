@@ -30,6 +30,10 @@ const EditProjectForm = ({ project }: { project: IProject }) => {
       builderName: formData.get("builderName")?.toString().trim(),
       builderEmail: formData.get("builderEmail")?.toString().trim(),
       builderUsername: formData.get("builderUsername")?.toString().trim(),
+      builderDiscordUsername: formData
+        .get("builderDiscordUsername")
+        ?.toString()
+        .trim(),
       builderImage: formData.get("builderImage")?.toString().trim(),
       builderXLink: formData.get("builderXLink")?.toString().trim(),
       builderAbout: formData.get("builderAbout")?.toString().trim(),
@@ -100,6 +104,13 @@ const EditProjectForm = ({ project }: { project: IProject }) => {
           defaultValue={project.builder?.email?.toString() || ""}
         />
       </div>
+      <input
+        name="builderDiscordUsername"
+        type="text"
+        className="input w-full"
+        placeholder="Builder Discord username"
+        defaultValue={project.builder?.discordUsername?.toString() || ""}
+      />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <input
           name="builderImage"
